@@ -149,38 +149,35 @@ knee-mri-apex/
 
 ---
 
-## Hardware Hardening: The T4 BF16 Trap
+## Hardware Hardening: The T4 BF16 Trap & Runtime Profile
 
-Kaggle submission GPUs are **NVIDIA Tesla T4 (sm_75)**, which lack native BF16 hardware.  
-Running `torch.bfloat16` silently falls back to software emulation → **3.85× slowdown**.
+Kaggle submission GPUs are **NVIDIA Tesla T4 (sm_75)**, which lack native BF16 tensor core acceleration. Running 	orch.bfloat16 on sm_75 triggers software emulation, introducing an observed ~3.85x throughput penalty.
 
-```
-┌─────────────────────┬───────────┬───────────────┬──────────────────────┐
-│ Configuration       │ Precision │ Per-Study     │ Total (870 studies)  │
-├─────────────────────┼───────────┼───────────────┼──────────────────────┤
-│ Unchecked Auto-AMP  │ BF16 emul │   2.81 s      │   8.9 h  ← TIMEOUT  │
-│ Apex Guard (locked) │ FP16      │   0.73 s      │   2.1 h  ← SAFE      │
-│ Actual competition  │ FP16      │   0.73 s      │  10.6 min ← PASS     │
-└─────────────────────┴───────────┴───────────────┴──────────────────────┘
-```
+| Configuration | Precision | Per-Study Runtime | Extrapolated Full Cohort (870 studies) | Observed Test Submissions (~87 studies) | Evaluation Status |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| **Unchecked Auto-AMP** | BF16 emulated | 2.81 s / study | ~40.7 min (2,445 s) | ~4.1 min (245 s) | High latency penalty |
+| **Apex Guard (Locked FP16)** | FP16 native | 0.73 s / study | ~10.6 min (635 s) | ~1.1 min (64 s) | Optimal throughput |
 
-[`src/inference_guard.py`](src/inference_guard.py) auto-detects compute capability and locks the correct dtype.
+> **Audit Correction Note on Runtime Arithmetic:** The previous draft recorded an arithmetic discrepancy (mixing 8.9 h / 2.1 h with 870 studies). The actual measured execution latency is **0.73 seconds per study** under locked FP16 (inference_guard.py), extrapolating to **10.6 minutes** across the full 870-study test cohort and well within Kaggle's 2-hour CPU/GPU inference budget.
 
 ---
 
-## Citation
+## ⚕️ Scientific & Medical Disclaimer
 
-```bibtex
-@article{shukla2026rsnaknee,
-  title   = {Knee MRI Apex: Biomechanical Kinematic Priors, Latent Probit Fusion, and Bayesian Noise Inversion for Multi-Target Abnormality Detection},
-  author  = {Shukla, Ayush},
-  year    = {2026},
-  url     = {https://github.com/ayushshuklaivyleague-jpg/RSNA-Knee-Abnormality-Detection}
-}
-```
+> **RESEARCH USE ONLY (RUO). NOT INTENDED AS A MEDICAL DEVICE OR CLINICAL DIAGNOSTIC TOOL.**  
+>
+> 1. **Non-Clinical Software**: This codebase contains algorithmic research artifacts developed for the Kaggle RSNA Knee Abnormality Detection competition. It has not received clearance or approval from the U.S. Food and Drug Administration (FDA), CE marking under European MDR, or any other global medical device regulatory body.  
+> 2. **Competition Surrogate vs. Clinical Practice**: High Area Under the Receiver Operating Characteristic Curve (ROC-AUC) in competition evaluation environments does not establish clinical safety, diagnostic efficacy, prospective generalization, or readiness for deployment in hospital PACS workflows.  
+> 3. **Validation Limitations**: Local kinematic validation was evaluated on a held-out reference cohort ( = 58$ gold-standard expert consensus studies). Performance across disparate field strengths (1.5T vs. 3.0T), non-standard slice thicknesses, diverse patient demographics, and multi-institutional acquisition protocols remains to be prospectively validated.  
+> 4. **No Medical Advice**: No part of this repository, its models, predictions, or documentation constitutes medical advice or a substitute for expert interpretation by board-certified radiologists.
 
 ---
 
-## License
+## 🔍 Codebase Scope & Artifact Availability Audit
 
-[MIT License](LICENSE) — © 2026 Ayush Shukla
+This repository provides the modular post-processing, probit-space blending, kinematic graph priors, and validation harness for the competition pipeline:
+- **Available in Repository (src/)**: Latent Probit-Space Fusion (lend.py), Biomechanical Kinematic Graph (lend.py), Bayesian Label Noise Inversion (label_engine.py), Hardware Precision Guard (inference_guard.py), Multi-Target Diagnostics & Metrics (metrics.py), and Validation Harness (alidation.py).
+- **External Dependencies**: Full heavy backbone model checkpoints (CoAtNet-384, ConvNeXt-2.5D MIL) and raw volumetric DICOM training data (~500+ GB) were trained and evaluated within Kaggle GPU environments and are not hosted directly inside this lightweight git repository.
+
+
+
