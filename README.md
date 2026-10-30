@@ -191,3 +191,12 @@ This repository provides the modular post-processing, probit-space blending, kin
 
 
 
+
+
+---
+
+## 🤖 AI-Assisted Development & Engineering Tool Disclosure
+
+- **Development Stack**: Python 3.10+, PyTorch, TorchVision, SciPy, Scikit-Learn, and CUDA / AMP.
+- **AI Tool Assistance**: ChatGPT and Antigravity were utilized for modular script debugging, optimizing probit matrix operations, drafting test guards, and reviewing documentation.
+- **Research Authorship**: All biomechanical prior formulations, probit blending architectures, and evaluation harnesses were conceptualized, implemented, and audited by the author.
