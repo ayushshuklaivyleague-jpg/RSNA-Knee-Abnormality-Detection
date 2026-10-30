@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this research or cite this benchmark, please cite it as below."
+authors:
+  - family-names: "Shukla"
+    given-names: "Ayush"
+    email: "ayushshuklaivyleague@gmail.com"
+    orcid: "https://orcid.org/0009-0003-8207-4226"
+    affiliation: "Department of Computational Medicine & Deep Learning, Independent Research Initiative"
+title: "Decoupled Kinematic Priors, Latent Probit Fusion, and Bayesian Noise Inversion for Multi-Target Knee MRI Abnormality Detection: A Biomechanically Regularized, Weakly Supervised Multi-Plane Deep Learning Benchmark on the RSNA Knee Cohort"
+version: 1.0.0
+date-released: 2026-10-30
+url: "https://github.com/ayushshuklaivyleague-jpg/RSNA-Knee-Abnormality-Detection"
+repository-code: "https://github.com/ayushshuklaivyleague-jpg/RSNA-Knee-Abnormality-Detection"
+keywords:
+  - "deep learning"
+  - "musculoskeletal radiology"
+  - "knee mri"
+  - "biomechanics"
+  - "kinematic priors"
+  - "probit fusion"
+  - "rsna"
+  - "multi-instance learning"
+  - "medical imaging"
