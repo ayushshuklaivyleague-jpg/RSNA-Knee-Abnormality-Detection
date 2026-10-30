@@ -6,7 +6,7 @@ authors:
     email: "ayushshuklaivyleague@gmail.com"
     orcid: "https://orcid.org/0009-0003-8207-4226"
     affiliation: "Department of Computational Medicine & Deep Learning, Independent Research Initiative"
-title: "Decoupled Kinematic Priors, Latent Probit Fusion, and Bayesian Noise Inversion for Multi-Target Knee MRI Abnormality Detection: A Biomechanically Regularized, Weakly Supervised Multi-Plane Deep Learning Benchmark on the RSNA Knee Cohort"
+title: "Knee MRI Apex: Biomechanical Kinematic Priors, Latent Probit Fusion, and Bayesian Noise Inversion for Multi-Target Abnormality Detection"
 version: 1.0.0
 date-released: 2026-10-30
 url: "https://github.com/ayushshuklaivyleague-jpg/RSNA-Knee-Abnormality-Detection"
