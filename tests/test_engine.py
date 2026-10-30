@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 """
 RSNA Knee Abnormality Detection: Full Phase 1 Self-Test
 Runs simulation across 3 synthetic models with distinct target profiles to test:

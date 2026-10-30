@@ -1,5 +1,11 @@
+import os
+import pytest
 import pandas as pd
 import numpy as np
+
+if not os.path.exists('data/gold_oof/gold_ground_truth.csv'):
+    pytest.skip('External gold OOF benchmark dataset data/gold_oof/ is not hosted in public repo', allow_module_level=True)
+
 from sklearn.metrics import roc_auc_score
 from scipy.special import ndtri, ndtr
 

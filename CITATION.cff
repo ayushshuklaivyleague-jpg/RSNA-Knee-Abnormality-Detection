@@ -5,7 +5,7 @@ authors:
     given-names: "Ayush"
     email: "ayushshuklaivyleague@gmail.com"
     orcid: "https://orcid.org/0009-0003-8207-4226"
-    affiliation: "Department of Computational Medicine & Deep Learning, Independent Research Initiative"
+    affiliation: "Independent Research Initiative, Medical Image Computing"
 title: "Knee MRI Apex: Biomechanical Kinematic Priors, Latent Probit Fusion, and Bayesian Noise Inversion for Multi-Target Abnormality Detection"
 version: 1.0.0
 date-released: 2026-10-30

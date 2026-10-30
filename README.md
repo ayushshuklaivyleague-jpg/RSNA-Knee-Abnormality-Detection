@@ -149,6 +149,16 @@ knee-mri-apex/
 
 ---
 
+---
+
+## 📐 Methodological Notes: OOF Fitting & Kinematic Lift Reference
+
+1. **Target-Level Kinematic Lift Reference Baseline**:
+   - In Table 2, the per-target kinematic lift (e.g., ACL Tear $+0.031$, Baker\'s Cyst $+0.026$) is calculated against the **Uniform Probability Blend Baseline** (which achieves 0.9281 macro AUC), rather than solely against the isolated Probit model without kinematics. The probit transform establishes an intermediate lift, and kinematic graph projection provides the additive gains reported in the table.
+2. **Out-of-Fold (OOF) Weight Fitting & Independent Holdout**:
+   - The SLSQP optimizer in src/blend.py fits per-target weighting parameters across out-of-fold probability vectors. To avoid optimistic bias from reporting scores on the exact partition used for parameter selection, all reported validation metrics should be interpreted as cross-validated performance bounds; true clinical generalization requires external, prospective institutional cohorts.
+
+
 ## Hardware Hardening: The T4 BF16 Trap & Runtime Profile
 
 Kaggle submission GPUs are **NVIDIA Tesla T4 (sm_75)**, which lack native BF16 tensor core acceleration. Running 	orch.bfloat16 on sm_75 triggers software emulation, introducing an observed ~3.85x throughput penalty.
