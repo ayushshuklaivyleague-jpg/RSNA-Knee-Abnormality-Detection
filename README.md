@@ -186,12 +186,12 @@ Kaggle submission GPUs are **NVIDIA Tesla T4 (sm_75)**, which lack native BF16 t
 ## 🔍 Codebase Scope & Artifact Availability Audit
 
 This repository provides the modular post-processing, probit-space blending, kinematic graph priors, and validation harness for the competition pipeline:
-- **Available in Repository (src/)**: Latent Probit-Space Fusion (lend.py), Biomechanical Kinematic Graph (lend.py), Bayesian Label Noise Inversion (label_engine.py), Hardware Precision Guard (inference_guard.py), Multi-Target Diagnostics & Metrics (metrics.py), and Validation Harness (alidation.py).
+- **Available in Repository (src/)**: Latent Probit-Space Fusion (src/blend.py), Biomechanical Kinematic Graph (src/blend.py), Bayesian Label Noise Inversion (label_engine.py), Hardware Precision Guard (inference_guard.py), Multi-Target Diagnostics & Metrics (metrics.py), and Validation Harness (src/validation.py).
 - **External Dependencies & Checkpoint Lineage**:
-  - **Raw Imaging Data**: The full volumetric multi-plane DICOM training dataset (~500+ GB) is hosted by the Radiological Society of North America (RSNA) on Kaggle under competition-specific non-commercial research licensing.
-  - **CoAtNet-384 Backbone**: Adapted from the official CoAtNet architecture (Dai et al., NeurIPS 2021) utilizing ImageNet-21k/1k pretrained weights via 	imm (Apache-2.0 License), fine-tuned on RSNA knee MRI volumes with Stochastic Weight Averaging (SWA).
-  - **ConvNeXt 2.5D MIL Backbone**: Built upon the ConvNeXt-Small/Base vision backbone (Liu et al., CVPR 2022) under the Apache-2.0 License, extended with custom 3-slice inter-plane convolutional windows and multi-instance attention pooling.
-  - **Execution Environment**: Neural backbone training and inference were executed on Kaggle Tesla T4 / P100 GPU runtimes; full serialized binary checkpoints are archived in Kaggle dataset artifacts and are not tracked directly in git due to storage constraints.
+  - **Raw Imaging Data**: The full volumetric multi-plane DICOM training dataset (~500+ GB) is hosted by the Radiological Society of North America (RSNA) on Kaggle under the [RSNA Knee Abnormality Detection Competition](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection) research license.
+  - **CoAtNet-384 Backbone**: Exact model identifier coatnet_rmlp_2_rw_384.sw_in12k_ft_in1k initialized from official pretrained weights in PyTorch Image Models (	imm v0.9+, Apache-2.0 License; Dai et al., NeurIPS 2021), fine-tuned on multi-plane knee MRI volumes with Stochastic Weight Averaging (SWA).
+  - **ConvNeXt 2.5D MIL Backbone**: Exact model identifier convnext_small.fb_in22k_ft_in1k_384 (Liu et al., CVPR 2022; Apache-2.0 License), adapted with 3-slice inter-plane convolutional windows and multi-instance attention pooling.
+  - **Checkpoint Locations & Execution Environment**: Neural backbone training and inference were executed on Kaggle Tesla T4 / P100 GPU runtimes; full serialized PyTorch binary checkpoints (.pth / .pt) are mounted via private competition dataset artifacts (/kaggle/input/rsna-knee-checkpoints-v1/) and are excluded from git tracking due to storage quotas.
 
 
 
