@@ -186,8 +186,12 @@ Kaggle submission GPUs are **NVIDIA Tesla T4 (sm_75)**, which lack native BF16 t
 ## 🔍 Codebase Scope & Artifact Availability Audit
 
 This repository provides the modular post-processing, probit-space blending, kinematic graph priors, and validation harness for the competition pipeline:
-- **Available in Repository (src/)**: Latent Probit-Space Fusion (lend.py), Biomechanical Kinematic Graph (lend.py), Bayesian Label Noise Inversion (label_engine.py), Hardware Precision Guard (inference_guard.py), Multi-Target Diagnostics & Metrics (metrics.py), and Validation Harness (alidation.py).
-- **External Dependencies**: Full heavy backbone model checkpoints (CoAtNet-384, ConvNeXt-2.5D MIL) and raw volumetric DICOM training data (~500+ GB) were trained and evaluated within Kaggle GPU environments and are not hosted directly inside this lightweight git repository.
+- **Available in Repository (src/)**: Latent Probit-Space Fusion (lend.py), Biomechanical Kinematic Graph (lend.py), Bayesian Label Noise Inversion (label_engine.py), Hardware Precision Guard (inference_guard.py), Multi-Target Diagnostics & Metrics (metrics.py), and Validation Harness (alidation.py).
+- **External Dependencies & Checkpoint Lineage**:
+  - **Raw Imaging Data**: The full volumetric multi-plane DICOM training dataset (~500+ GB) is hosted by the Radiological Society of North America (RSNA) on Kaggle under competition-specific non-commercial research licensing.
+  - **CoAtNet-384 Backbone**: Adapted from the official CoAtNet architecture (Dai et al., NeurIPS 2021) utilizing ImageNet-21k/1k pretrained weights via 	imm (Apache-2.0 License), fine-tuned on RSNA knee MRI volumes with Stochastic Weight Averaging (SWA).
+  - **ConvNeXt 2.5D MIL Backbone**: Built upon the ConvNeXt-Small/Base vision backbone (Liu et al., CVPR 2022) under the Apache-2.0 License, extended with custom 3-slice inter-plane convolutional windows and multi-instance attention pooling.
+  - **Execution Environment**: Neural backbone training and inference were executed on Kaggle Tesla T4 / P100 GPU runtimes; full serialized binary checkpoints are archived in Kaggle dataset artifacts and are not tracked directly in git due to storage constraints.
 
 
 
