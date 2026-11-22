@@ -161,7 +161,7 @@ knee-mri-apex/
 
 ## Hardware Hardening: The T4 BF16 Trap & Runtime Profile
 
-Kaggle submission GPUs are **NVIDIA Tesla T4 (sm_75)**, which lack native BF16 tensor core acceleration. Running 	orch.bfloat16 on sm_75 triggers software emulation, introducing an observed ~3.85x throughput penalty.
+Kaggle submission GPUs are **NVIDIA Tesla T4 (sm_75)**, which lack native BF16 tensor core acceleration. Running `torch.bfloat16` on sm_75 triggers software emulation, introducing an observed ~3.85x throughput penalty.
 
 | Configuration | Precision | Per-Study Runtime | Extrapolated Full Cohort (870 studies) | Observed Test Submissions (~87 studies) | Evaluation Status |
 |:---|:---:|:---:|:---:|:---:|:---:|
@@ -178,7 +178,7 @@ Kaggle submission GPUs are **NVIDIA Tesla T4 (sm_75)**, which lack native BF16 t
 >
 > 1. **Non-Clinical Software**: This codebase contains algorithmic research artifacts developed for the Kaggle RSNA Knee Abnormality Detection competition. It has not received clearance or approval from the U.S. Food and Drug Administration (FDA), CE marking under European MDR, or any other global medical device regulatory body.  
 > 2. **Competition Surrogate vs. Clinical Practice**: High Area Under the Receiver Operating Characteristic Curve (ROC-AUC) in competition evaluation environments does not establish clinical safety, diagnostic efficacy, prospective generalization, or readiness for deployment in hospital PACS workflows.  
-> 3. **Validation Limitations**: Local kinematic validation was evaluated on a held-out reference cohort ( = 58$ gold-standard expert consensus studies). Performance across disparate field strengths (1.5T vs. 3.0T), non-standard slice thicknesses, diverse patient demographics, and multi-institutional acquisition protocols remains to be prospectively validated.  
+> 3. **Validation Limitations**: Local kinematic validation was evaluated on a held-out reference cohort ($N_{\text{gold}} = 58$ gold-standard expert consensus studies). Performance across disparate field strengths (1.5T vs. 3.0T), non-standard slice thicknesses, diverse patient demographics, and multi-institutional acquisition protocols remains to be prospectively validated.  
 > 4. **No Medical Advice**: No part of this repository, its models, predictions, or documentation constitutes medical advice or a substitute for expert interpretation by board-certified radiologists.
 
 ---
@@ -189,7 +189,7 @@ This repository provides the modular post-processing, probit-space blending, kin
 - **Available in Repository (src/)**: Latent Probit-Space Fusion (src/blend.py), Biomechanical Kinematic Graph (src/blend.py), Bayesian Label Noise Inversion (label_engine.py), Hardware Precision Guard (inference_guard.py), Multi-Target Diagnostics & Metrics (metrics.py), and Validation Harness (src/validation.py).
 - **External Dependencies & Checkpoint Lineage**:
   - **Raw Imaging Data**: The full volumetric multi-plane DICOM training dataset (~500+ GB) is hosted by the Radiological Society of North America (RSNA) on Kaggle under the [RSNA Knee Abnormality Detection Competition](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection) research license.
-  - **CoAtNet-384 Backbone**: Exact model identifier coatnet_rmlp_2_rw_384.sw_in12k_ft_in1k initialized from official pretrained weights in PyTorch Image Models (	imm v0.9+, Apache-2.0 License; Dai et al., NeurIPS 2021), fine-tuned on multi-plane knee MRI volumes with Stochastic Weight Averaging (SWA).
+  - **CoAtNet-384 Backbone**: Exact model identifier coatnet_rmlp_2_rw_384.sw_in12k_ft_in1k initialized from official pretrained weights in PyTorch Image Models (`timm` v0.9+, Apache-2.0 License; Dai et al., NeurIPS 2021), fine-tuned on multi-plane knee MRI volumes with Stochastic Weight Averaging (SWA).
   - **ConvNeXt 2.5D MIL Backbone**: Exact model identifier convnext_small.fb_in22k_ft_in1k_384 (Liu et al., CVPR 2022; Apache-2.0 License), adapted with 3-slice inter-plane convolutional windows and multi-instance attention pooling.
   - **Checkpoint Locations & Execution Environment**: Neural backbone training and inference were executed on Kaggle Tesla T4 / P100 GPU runtimes; full serialized PyTorch binary checkpoints (.pth / .pt) are mounted via private competition dataset artifacts (/kaggle/input/rsna-knee-checkpoints-v1/) and are excluded from git tracking due to storage quotas.
 

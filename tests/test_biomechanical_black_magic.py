@@ -1,3 +1,12 @@
+"""
+Biomechanical Kinematic Prior Ablation (Gold OOF Studies, N = 58)
+-----------------------------------------------------------------
+Evaluates the empirical lift of biomechanical physiological couplings:
+- ACL Tear <-> Lateral Femoral Condyle Bone Contusion (Pivot-shift injury mechanism)
+- Medial Meniscus Tear <-> Medial Compartment Osteoarthritis (Degenerative load axis)
+- Joint Effusion <-> Synovitis & Baker's Cyst (Hydrostatic fluid pressure communication)
+against the uniform rank baseline across N = 58 gold ground-truth studies.
+"""
 import os
 import pytest
 import pandas as pd
@@ -82,16 +91,16 @@ p_fused = pd.DataFrame(ndtr(z_fused.values), columns=targets, index=gt.index)
 raw_consensus = (raptor[targets] + compact[targets]) / 2.0
 final_scores = p_fused + 1e-5 * raw_consensus
 
-aucs_black_magic = []
+aucs_kinematic = []
 for t in targets:
     y = gt[t].values
     s = final_scores[t].values
-    auc_bm = roc_auc_score(y, s)
-    aucs_black_magic.append(auc_bm)
-    diff = auc_bm - aucs_baseline[targets.index(t)]
-    print(f"{t:18s} | Baseline: {aucs_baseline[targets.index(t)]:.4f} | Black Magic: {auc_bm:.4f} | Gain: {diff:+.4f}")
+    auc_km = roc_auc_score(y, s)
+    aucs_kinematic.append(auc_km)
+    diff = auc_km - aucs_baseline[targets.index(t)]
+    print(f"{t:18s} | Baseline: {aucs_baseline[targets.index(t)]:.4f} | Kinematic Prior: {auc_km:.4f} | Gain: {diff:+.4f}")
 
 print("-" * 65)
-print(f"BASELINE MEAN AUC:     {np.mean(aucs_baseline):.5f}")
-print(f"BLACK MAGIC MEAN AUC:  {np.mean(aucs_black_magic):.5f}")
-print(f"NET LEADERBOARD BOOST: {np.mean(aucs_black_magic) - np.mean(aucs_baseline):+.5f} (+{(np.mean(aucs_black_magic) - np.mean(aucs_baseline))*100:.2f}%)")
+print(f"BASELINE MEAN AUC:        {np.mean(aucs_baseline):.5f}")
+print(f"KINEMATIC PRIOR MEAN AUC: {np.mean(aucs_kinematic):.5f}")
+print(f"NET VALIDATION LIFT:      {np.mean(aucs_kinematic) - np.mean(aucs_baseline):+.5f} (+{(np.mean(aucs_kinematic) - np.mean(aucs_baseline))*100:.2f}%)")

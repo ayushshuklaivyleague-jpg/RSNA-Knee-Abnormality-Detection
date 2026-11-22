@@ -1,3 +1,11 @@
+"""
+Latent Probit Fusion Algorithmic Unit Test
+------------------------------------------
+NOTE: This script provides synthetic algorithmic unit validation of probit transform
+mechanics (ndtri rank mapping, surgical routing weights, standard normal CDF inversion ndtr,
+and numerical stability). It does NOT constitute empirical evidence of clinical model lift
+(which is documented on the 58 gold studies and official competition leaderboard).
+"""
 import numpy as np
 import pandas as pd
 from scipy.special import ndtri, ndtr

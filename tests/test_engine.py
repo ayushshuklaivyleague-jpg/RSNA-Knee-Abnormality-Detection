@@ -2,13 +2,15 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 """
-RSNA Knee Abnormality Detection: Full Phase 1 Self-Test
-Runs simulation across 3 synthetic models with distinct target profiles to test:
-- Metric calculation
-- Spearman correlations
-- Specialist identification
-- Rank blending optimization & blend lift verification
-- Submission validation against sample_submission.csv
+RSNA Knee Abnormality Detection: Full Phase 1 Self-Test & Software Integration Suite
+------------------------------------------------------------------------------------
+NOTE: This script performs synthetic end-to-end integration testing of:
+- Multi-target metric computation (Macro ROC-AUC)
+- Inter-model Spearman rank correlations and diagnostic specialist identification
+- Rank ensemble SLSQP fitting and monotonic blend verification
+- Runtime watchdog and submission file integrity guards
+using mock/simulated inputs. It verifies software interfaces and contracts,
+NOT empirical clinical performance.
 """
 
 import numpy as np
@@ -94,12 +96,26 @@ def run_self_test():
     proj = watchdog.get_projection()
     print(f"Runtime Projection for 870 test studies: {proj['projected_total_hours']:.2f} hours (Within 9h: {proj['within_9h_limit']})")
 
-    # Check submission validation against sample_submission.csv
-    test_sub = pd.read_csv("sample_submission.csv")
+    # Check submission validation against sample_submission.csv (or synthetic template if not on Kaggle environment)
+    if os.path.exists("sample_submission.csv"):
+        sample_ref = "sample_submission.csv"
+        test_sub = pd.read_csv("sample_submission.csv")
+    else:
+        sample_ref = "test_synthetic_sample.csv"
+        test_sub = pd.DataFrame(index=range(20), columns=["StudyInstanceUID"] + TARGET_COLS)
+        test_sub["StudyInstanceUID"] = [f"test_study_{i}" for i in range(20)]
+        test_sub[TARGET_COLS] = 0.5
+        test_sub.to_csv(sample_ref, index=False)
+
     test_sub[TARGET_COLS] = 0.5
     test_sub.to_csv("test_submission_sample.csv", index=False)
-    is_valid, errors = validate_submission_file("test_submission_sample.csv", "sample_submission.csv", allow_neutral_fill=True)
+    is_valid, errors = validate_submission_file("test_submission_sample.csv", sample_ref, allow_neutral_fill=True)
     print("Sample Submission Validation:", "PASSED" if is_valid else f"FAILED: {errors}")
+
+    # Clean up temporary test files
+    for tmp in ["test_submission_sample.csv", "test_synthetic_sample.csv"]:
+        if os.path.exists(tmp):
+            os.remove(tmp)
     print("\n>>> ALL PHASE 1 SYSTEM TESTS PASSED SUCCESSFULLY! <<<")
 
 if __name__ == "__main__":

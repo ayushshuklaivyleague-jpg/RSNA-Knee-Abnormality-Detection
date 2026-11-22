@@ -1,7 +1,7 @@
 # Decoupled Kinematic Priors, Latent Probit Fusion, and Bayesian Noise Inversion for Multi-Target Knee MRI Abnormality Detection
 
 **Author:** Ayush Shukla  
-**Affiliation:** Department of Computational Medicine & Deep Learning, Independent Research Initiative  
+**Affiliation:** Independent Student Researcher  
 *Correspondence:* ayushshuklaivyleague@gmail.com  
 *ORCID:* 0009-0003-8207-4226  
 **Study Type:** Multimodal Deep Learning Benchmark, Biomechanical Knowledge Integration, and Clinical Validation Study  
@@ -119,8 +119,10 @@ $$\text{Effusion} \xrightarrow{\text{hydrostatic pressure}} \text{Synovitis} \qu
 
 ## 3. Dataset Curation, Label Uncertainty, and Mathematical Formulation
 
-### 3.1 Cohort Architecture and Multi-Plane Sequences
-The RSNA Knee Abnormality Detection dataset comprises multi-sequence DICOM MRI studies acquired across multiple outpatient imaging centers and hospital systems. For each subject study, the dataset contains:
+### 3.1 Cohort Architecture, Multi-Plane Sequences, and Data Ethics Statement
+The RSNA Knee Abnormality Detection dataset comprises multi-sequence DICOM MRI studies acquired across multiple outpatient imaging centers and hospital systems. This study used exclusively the de-identified, publicly released Kaggle competition dataset made available by the Radiological Society of North America (RSNA). All analyses constitute a retrospective secondary analysis of a publicly released competition benchmark without direct patient contact, re-identification, or access to identifiable protected health information. This work does not constitute primary human subjects research under U.S. federal regulatory frameworks (45 CFR § 46.104(d)(4)). No formal project-specific Institutional Review Board (IRB) determination was solicited or granted. The original RSNA dataset collection was conducted under the RSNA's institutional oversight; this project performed only downstream algorithmic development and evaluation on the publicly available de-identified data files.
+
+For each subject study, the dataset contains:
 - **Sagittal Series**: Standard sagittal proton-density (PD) or T2-weighted fat-suppressed sequences, optimized for visualizing the ACL, PCL, meniscal anterior/posterior horns, and extensor mechanism.
 - **Coronal Series**: Coronal PD fat-suppressed or T1/T2 sequences, capturing the collateral ligaments (MCL, LCL), meniscal bodies, and medial/lateral femorotibial joint space.
 - **Axial Series**: Axial fluid-sensitive sequences, optimal for assessing patellofemoral cartilage, patellar tracking, trochlear groove morphology, and popliteal fossa anatomy (Baker's cyst).
@@ -498,7 +500,7 @@ All mathematical formulations, architectural hyperparameters, optimal surgical r
 21. **Koga H, Nakamae A, Shima Y, et al.** Mechanisms for noncontact anterior cruciate ligament injuries: knee joint kinematics in 10 injury situations from female team handball and basketball. *American Journal of Sports Medicine*, 2010; 38(11): 2218-2225.
 22. **Kaplan PA, Gehl RH, Dussault RG, et al.** Bone contusions of the posterior lip of the medial tibial plateau (contrecoup injury) and associated internal derangements of the knee at MR imaging. *Radiology*, 1999; 211(3): 747-753.
 23. **Sellam J, Berenbaum F.** The role of synovitis in pathophysiology and clinical symptoms of osteoarthritis. *Nature Reviews Rheumatology*, 2010; 6(11): 625-635.
-24. **Lindgren PG, WillÃ©n R.** Gastrocnemio-semimembranosus bursa and its relation to the knee joint. II. Histological and chemical study. *Acta Radiologica: Diagnosis*, 1978; 19(3): 497-512.
+24. **Lindgren PG, Willén R.** Gastrocnemio-semimembranosus bursa and its relation to the knee joint. II. Histological and chemical study. *Acta Radiologica: Diagnosis*, 1978; 19(3): 497-512.
 25. **Liu Z, Mao H, Wu CY, et al.** A ConvNet for the 2020s. *IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)*, 2022: 11976-11986.
 26. **Dai Z, Liu H, Le QV, Tan M.** CoAtNet: Marrying convolution and attention for all data sizes. *Advances in Neural Information Processing Systems (NeurIPS)*, 2021; 34: 3965-3977.
 27. **Willemink MJ, Koszek WA, Hardell C, et al.** Preparing medical imaging data for machine learning. *Radiology*, 2020; 295(1): 4-15.
